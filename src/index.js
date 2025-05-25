@@ -303,7 +303,7 @@ export default {
 				WHERE 
 					a.tipus = 'Esmorzars GRID'
 				GROUP BY 
-					e.nom, u.municipi, u.poligon, a.data_inici, YEAR(a.data_inici)
+					e.nom, u.municipi, u.poligon, a.data_inici, strftime('%Y', a.data_inici)
 				ORDER BY 
 					a.data_inici DESC;
 			`).all();
@@ -396,8 +396,7 @@ export default {
 					e.id AS id_empresa,
 					e.nom AS empresa,
 					COUNT(DISTINCT p.id) AS total_treballadors,
-					GROUP_CONCAT(DISTINCT CONCAT(p.nom, ' ', p.cognoms) ORDER BY p.nom SEPARATOR ', ') AS noms_treballadors
-				FROM empreses e
+    				GROUP_CONCAT(DISTINCT p.nom || ' ' || p.cognoms ORDER BY p.nom) AS noms_treballadors				FROM empreses e
 				JOIN persones p ON e.id = p.empresa_id
 				JOIN persones_activitats pa ON p.id = pa.persona_id
 				JOIN activitats a ON pa.activitat_id = a.id
@@ -423,7 +422,6 @@ export default {
 				JOIN empreses e ON p.empresa_id = e.id
 				WHERE a.tipus = 'Esmorzars GRID'
 				ORDER BY a.data_inici DESC, e.nom, p.cognoms, p.nom;
-
 			`).all();
 			return Response.json(results);
 		}
@@ -1344,7 +1342,7 @@ export default {
 		if (pathname === "/servei9") {
 			const { results } = await env.DB.prepare(`
 				SELECT 
-                    CONCAT(YEAR(c.data_inici), '-', 
+                    CONCAT(strftime('%Y', c.data_inici), '-', 
                         CASE WHEN MONTH(c.data_inici) <= 6 THEN '1' ELSE '2' END) AS semestre,
                     COUNT(DISTINCT ec.empresa_id) AS empreses_participants
                 FROM coopera c
@@ -1359,7 +1357,7 @@ export default {
 		if (pathname === "/servei10") {
 			const { results } = await env.DB.prepare(`
 				SELECT 
-                    YEAR(c.data_inici) AS any,
+                    strftime('%Y', c.data_inici) AS any,
                     'Energia' AS vector,
                     COUNT(c.id) AS nombre_projectes
                 FROM coopera c
@@ -1369,7 +1367,7 @@ export default {
                 UNION ALL
 
                 SELECT 
-                    YEAR(c.data_inici) AS any,
+                    strftime('%Y', c.data_inici) AS any,
                     'Aigua' AS vector,
                     COUNT(c.id) AS nombre_projectes
                 FROM coopera c
@@ -1379,7 +1377,7 @@ export default {
                 UNION ALL
 
                 SELECT 
-                    YEAR(c.data_inici) AS any,
+                    strftime('%Y', c.data_inici) AS any,
                     'Emissions' AS vector,
                     COUNT(c.id) AS nombre_projectes
                 FROM coopera c
@@ -1389,7 +1387,7 @@ export default {
                 UNION ALL
 
                 SELECT 
-                    YEAR(c.data_inici) AS any,
+                    strftime('%Y', c.data_inici) AS any,
                     'Econòmic' AS vector,
                     COUNT(c.id) AS nombre_projectes
                 FROM coopera c
