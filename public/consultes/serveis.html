@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultes Servei Coopera</title>
+    <style>
+        /* Estils similars a la pàgina d'Esmorzars GRID (Empreses) */
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1,
+        h2 {
+            color: var(--primary-color);
+        }
+
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #003d44;
+        }
+
+        .period-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .period-section h2 {
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .query-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .query-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .query-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .query-button:hover {
+            background-color: #003d44;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+
+    <h1>Consultes Servei Coopera</h1>
+
+    <div class="period-section">
+        <h2>Total</h2>
+        <ul class="query-list">
+            <li class="query-item">
+                <span>Quantes empreses han participat en projectes del coopera:</span>
+                <button class="query-button" onclick="executarConsulta('servei1')">Consultar</button>
+            </li>
+            <table id="servei1-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei1-container">
+                </tbody>
+            </table>
+            <!--SELECT COUNT(DISTINCT ec.empresa_id) AS total_empreses_participants
+    FROM empreses_coopera ec
+    JOIN coopera c ON ec.coopera_id = c.id;
+    -->
+            <li class="query-item">
+                <span>En quants projectes del coopera ha participat cada empresa?</span>
+                <button class="query-button" onclick="executarConsulta('servei2')">Consultar</button>
+            </li>
+            <table id="servei2-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei2-container">
+                </tbody>
+            </table> <!--SELECT e.nom AS empresa, c.titol AS projecte, COUNT(ec.coopera_id) AS nombre_projectes
+    FROM empreses e
+    JOIN empreses_coopera ec ON e.id = ec.empresa_id
+    JOIN coopera c ON ec.coopera_id = c.id
+    GROUP BY e.nom, c.titol
+    ORDER BY nombre_projectes DESC;
+    -->
+            <li class="query-item">
+                <span>Quants projectes s'han fet de cada vector? </span>
+                <button class="query-button" onclick="executarConsulta('servei3')">Consultar</button>
+            </li>
+            <table id="servei3-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei3-container">
+                </tbody>
+            </table> <!--SELECT 
+        SUM(CASE WHEN impacte_energia IS NOT NULL THEN 1 ELSE 0 END) AS total_impactes_energia,
+        SUM(CASE WHEN impacte_aigua IS NOT NULL THEN 1 ELSE 0 END) AS total_impactes_aigua,
+        SUM(CASE WHEN impacte_emissions IS NOT NULL THEN 1 ELSE 0 END) AS total_impactes_emissions,
+        SUM(CASE WHEN impacte_economic IS NOT NULL THEN 1 ELSE 0 END) AS total_impactes_economic
+    FROM coopera;
+    -->
+            <li class="query-item">
+                <span>Quantes empreses han participat en projectes de cada vector?</span>
+                <button class="query-button" onclick="executarConsulta('servei4')">Consultar</button>
+            </li>
+            <table id="servei4-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei4-container">
+                </tbody>
+            </table>
+            <!--SELECT 
+        'Energia' AS vector,
+        COUNT(DISTINCT ec.empresa_id) AS nombre_empreses
+    FROM coopera c
+    JOIN empreses_coopera ec ON c.id = ec.coopera_id
+    WHERE c.impacte_energia IS NOT NULL
+    
+    UNION ALL
+    
+    SELECT 
+        'Aigua' AS vector,
+        COUNT(DISTINCT ec.empresa_id) AS nombre_empreses
+    FROM coopera c
+    JOIN empreses_coopera ec ON c.id = ec.coopera_id
+    WHERE c.impacte_aigua IS NOT NULL
+    
+    UNION ALL
+    
+    SELECT 
+        'Emissions' AS vector,
+        COUNT(DISTINCT ec.empresa_id) AS nombre_empreses
+    FROM coopera c
+    JOIN empreses_coopera ec ON c.id = ec.coopera_id
+    WHERE c.impacte_emissions IS NOT NULL
+    
+    UNION ALL
+    
+    SELECT 
+        'Econòmic' AS vector,
+        COUNT(DISTINCT ec.empresa_id) AS nombre_empreses
+    FROM coopera c
+    JOIN empreses_coopera ec ON c.id = ec.coopera_id
+    WHERE c.impacte_economic IS NOT NULL;
+    
+    -->
+            <li class="query-item">
+                <span>Quin estalvi han generat els projectes de cada vector?</span>
+                <button class="query-button" onclick="executarConsulta('servei5')">Consultar</button>
+            </li>
+            <table id="servei5-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei5-container">
+                </tbody>
+            </table> <!--SELECT 
+        'Energia' AS vector,
+        GROUP_CONCAT(c.impacte_economic) AS detalls_estalvi
+    FROM coopera c
+    WHERE c.impacte_energia IS NOT NULL
+    
+    UNION ALL
+    
+    SELECT 
+        'Aigua' AS vector,
+        GROUP_CONCAT(c.impacte_economic) AS detalls_estalvi
+    FROM coopera c
+    WHERE c.impacte_aigua IS NOT NULL
+    
+    UNION ALL
+    
+    SELECT 
+        'Emissions' AS vector,
+        GROUP_CONCAT(c.impacte_economic) AS detalls_estalvi
+    FROM coopera c
+    WHERE c.impacte_emissions IS NOT NULL;
+    -->
+            <li class="query-item">
+                <span>Quin estalvi ha generat cada projecte?</span>
+                <button class="query-button" onclick="executarConsulta('servei6')">Consultar</button>
+            </li>
+            <table id="servei6-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei6-container">
+                </tbody>
+            </table> <!--SELECT 
+        c.id AS id_servei, 
+        c.titol AS titol_servei, 
+        c.impacte_economic AS estalvi_generat
+    FROM coopera c
+    WHERE c.impacte_economic IS NOT NULL
+    ORDER BY c.titol;
+    -->
+            <li class="query-item">
+                <span>Quin estalvi ha obtingut cada empresa de cada projecte?</span>
+                <button class="query-button" onclick="executarConsulta('servei7')">Consultar</button>
+            </li>
+            <table id="servei7-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei7-container">
+                </tbody>
+            </table> <!--SELECT 
+        e.nom AS nom_empresa, 
+        c.titol AS titol_servei, 
+        c.impacte_economic AS estalvi_projecte
+    FROM empreses e
+    JOIN empreses_coopera ec ON e.id = ec.empresa_id
+    JOIN coopera c ON ec.coopera_id = c.id
+    WHERE c.impacte_economic IS NOT NULL
+    ORDER BY e.nom, c.titol;
+    -->
+            <li class="query-item">
+                <span>Quin estalvi ha obtingut cada empresa dels projectes de cada vector?</span>
+                <button class="query-button" onclick="executarConsulta('servei8')">Consultar</button>
+            </li>
+            <table id="servei8-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei8-container">
+                </tbody>
+            </table> <!--SELECT 
+        e.nom AS nom_empresa, 
+        c.titol AS titol_servei, 
+        c.impacte_economic AS estalvi_projecte
+    FROM empreses e
+    JOIN empreses_coopera ec ON e.id = ec.empresa_id
+    JOIN coopera c ON ec.coopera_id = c.id
+    WHERE c.impacte_economic IS NOT NULL
+    ORDER BY e.nom, c.titol;
+    -->
+            <li class="query-item">
+                <span>Quantes empreses han participat en projectes del coopera per semestre?</span>
+                <button class="query-button" onclick="executarConsulta('servei9')">Consultar</button>
+            </li>
+            <table id="servei9-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei9-container">
+                </tbody>
+            </table> <!--SELECT 
+        CONCAT(YEAR(c.data_inici), '-', 
+               CASE WHEN MONTH(c.data_inici) <= 6 THEN '1' ELSE '2' END) AS semestre,
+        COUNT(DISTINCT ec.empresa_id) AS empreses_participants
+    FROM coopera c
+    JOIN empreses_coopera ec ON c.id = ec.coopera_id
+    GROUP BY semestre
+    ORDER BY semestre;
+    
+    -->
+            <li class="query-item">
+                <span>Quants projectes s'han fet de cada vector per any?</span>
+                <button class="query-button" onclick="executarConsulta('servei10')">Consultar</button>
+            </li>
+            <table id="servei10-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="servei10-container">
+                </tbody>
+            </table> <!--SELECT 
+        YEAR(c.data_inici) AS any,
+        'Energia' AS vector,
+        COUNT(c.id) AS nombre_projectes
+    FROM coopera c
+    WHERE c.impacte_energia IS NOT NULL
+    GROUP BY any
+    
+    UNION ALL
+    
+    SELECT 
+        YEAR(c.data_inici) AS any,
+        'Aigua' AS vector,
+        COUNT(c.id) AS nombre_projectes
+    FROM coopera c
+    WHERE c.impacte_aigua IS NOT NULL
+    GROUP BY any
+    
+    UNION ALL
+    
+    SELECT 
+        YEAR(c.data_inici) AS any,
+        'Emissions' AS vector,
+        COUNT(c.id) AS nombre_projectes
+    FROM coopera c
+    WHERE c.impacte_emissions IS NOT NULL
+    GROUP BY any
+    
+    UNION ALL
+    
+    SELECT 
+        YEAR(c.data_inici) AS any,
+        'Econòmic' AS vector,
+        COUNT(c.id) AS nombre_projectes
+    FROM coopera c
+    WHERE c.impacte_economic IS NOT NULL
+    GROUP BY any;
+    -->
+        </ul>
+    </div>
+
+    <script>
+        async function executarConsulta(queryType) {
+            const response = await fetch(`/${encodeURIComponent(queryType)}`);
+            if (!response.ok) {
+                console.error("Error fetching data:", response.statusText);
+                return;
+            }
+
+            const data = await response.json();
+            console.log("Returned data:", data);
+            insertData(data, queryType)
+        }
+
+        function insertData(data, queryType) {
+            let container;
+            let table;
+
+            if (queryType === 'esmorzar1') {
+                container = document.getElementById('esmorzar1-container');
+                table = document.getElementById('esmorzar1-table');
+            } else if (queryType === 'esmorzar2') {
+                container = document.getElementById('esmorzar2-container');
+                table = document.getElementById('esmorzar2-table');
+            } else if (queryType === 'esmorzar3') {
+                container = document.getElementById('esmorzar3-container');
+                table = document.getElementById('esmorzar3-table');
+            } else if (queryType === 'esmorzar4') {
+                container = document.getElementById('esmorzar4-container');
+                table = document.getElementById('esmorzar4-table');
+            } else if (queryType === 'esmorzar5') {
+                container = document.getElementById('esmorzar5-container');
+                table = document.getElementById('esmorzar5-table');
+            } else if (queryType === 'esmorzar6') {
+                container = document.getElementById('esmorzar6-container');
+                table = document.getElementById('esmorzar6-table');
+            } else if (queryType === 'esmorzar7') {
+                container = document.getElementById('esmorzar7-container');
+                table = document.getElementById('esmorzar7-table');
+            } else if (queryType === 'esmorzar8') {
+                container = document.getElementById('esmorzar8-container');
+                table = document.getElementById('esmorzar8-table');
+            } else if (queryType === 'esmorzar9') {
+                container = document.getElementById('esmorzar9-container');
+                table = document.getElementById('esmorzar9-table');
+            }
+            
+            // Clear previous data
+            container.innerHTML = '';
+            const headers = Object.keys(data[0]); // Get the keys from the first object for headers
+
+            // Create table header if it doesn't exist
+            if (table.querySelector('thead tr').children.length === 0) {
+                const headerRow = table.querySelector('thead tr');
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header.charAt(0).toUpperCase() + header.slice(1); // Capitalize the first letter
+                    headerRow.appendChild(th);
+                });
+            }
+
+            // Populate table with data
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                headers.forEach(header => {
+                    const cell = document.createElement('td');
+                    cell.textContent = item[header]; // Use the key to get the value
+                    row.appendChild(cell);
+                });
+
+                container.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

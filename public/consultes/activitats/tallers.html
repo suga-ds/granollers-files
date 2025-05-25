@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tallers i cursos de formació - GRID Granollers</title>
+    <style>
+        /* Estils similars a les pàgines anteriors */
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1,
+        h2 {
+            color: var(--primary-color);
+        }
+
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #003d44;
+        }
+
+        .period-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .period-section h2 {
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .query-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .query-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .query-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .query-button:hover {
+            background-color: #003d44;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='activitats.html'">Tornar</button>
+
+    <h1>Tallers i cursos de formació</h1>
+
+    tallers:
+
+    <div class="period-section">
+        <h2>Total</h2>
+        <ul class="query-list">
+            <li class="query-item">
+                <span>Llistat de les empreses que han participat en cada curs/taller i el total:</span>
+                <button class="query-button" onclick="executarConsulta('taller1')">Consultar</button>
+            </li>
+            <table id="taller1-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="taller1-container">
+                </tbody>
+            </table>
+            <!--SELECT 
+    e.nom AS Empresa,
+    u.municipi AS 'Ubicació (municipi)',
+    u.poligon AS 'Ubicació (polígon)',
+    COUNT(DISTINCT pa.persona_id) AS 'Nº de persones de la mateixa empresa',
+    a.nom AS 'Temàtica del taller/formació',
+    (SELECT COUNT(DISTINCT e2.id) 
+     FROM empreses e2 
+     JOIN persones p2 ON e2.id = p2.empresa_id
+     JOIN persones_activitats pa2 ON p2.id = pa2.persona_id
+     JOIN activitats a2 ON pa2.activitat_id = a2.id
+     WHERE a2.tipus = 'Tallers i cursos de formació') AS 'Total d\'empreses'
+FROM 
+    empreses e
+JOIN 
+    persones p ON e.id = p.empresa_id
+JOIN 
+    persones_activitats pa ON p.id = pa.persona_id
+JOIN 
+    activitats a ON pa.activitat_id = a.id
+JOIN
+    ubicacions u ON e.id = u.empresa_id
+WHERE 
+    a.tipus = 'Tallers i cursos de formació'
+GROUP BY 
+    e.id, u.municipi, u.poligon, a.id
+ORDER BY 
+    e.nom, a.nom;
+-->
+            <li class="query-item">
+                <span>Nombre de treballadors que han participat a cada curs/taller i el total:</span>
+                <button class="query-button" onclick="executarConsulta('taller2')">Consultar</button>
+            </li>
+            <table id="taller2-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="taller2-container">
+                </tbody>
+            </table>
+            <!--SELECT 
+    p.nom AS Persona,
+    u.municipi AS 'Ubicació (municipi)',
+    u.poligon AS 'Ubicació (polígon)',
+    COUNT(DISTINCT pa.persona_id) AS 'Nº de persones de la mateixa empresa',
+    a.nom AS 'Temàtica del taller/formació',
+    (SELECT COUNT(DISTINCT e2.id) 
+     FROM empreses e2 
+     JOIN persones p2 ON e2.id = p2.empresa_id
+     JOIN persones_activitats pa2 ON p2.id = pa2.persona_id
+     JOIN activitats a2 ON pa2.activitat_id = a2.id
+     WHERE a2.tipus = 'Tallers i cursos de formació') AS 'Total d\'empreses'
+FROM 
+    persones p
+JOIN 
+    empreses e ON p.empresa_id = e.id
+JOIN 
+    persones_activitats pa ON p.id = pa.persona_id
+JOIN 
+    activitats a ON pa.activitat_id = a.id
+JOIN
+    ubicacions u ON e.id = u.empresa_id
+WHERE 
+    a.tipus = 'Tallers i cursos de formació'
+GROUP BY 
+    p.id, u.municipi, u.poligon, a.id
+ORDER BY 
+    p.nom, a.nom;
+-->
+            <li class="query-item">
+                <span>Nombre de treballadors de cada empresa que han participat a cursos/tallers:</span>
+                <button class="query-button" onclick="executarConsulta('taller3')">Consultar</button>
+            </li>
+            <table id="taller3-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="taller3-container">
+                </tbody>
+            </table>
+            <!--SELECT 
+    e.nom AS Empresa,
+    u.municipi AS 'Ubicació (municipi)',
+    u.poligon AS 'Ubicació (polígon)',
+    COUNT(DISTINCT pa.persona_id) AS 'Nº de treballadors participants',
+    (SELECT COUNT(DISTINCT pa2.persona_id) 
+     FROM persones_activitats pa2
+     JOIN activitats a2 ON pa2.activitat_id = a2.id
+     WHERE a2.tipus = 'Tallers i cursos de formació') AS 'Total general de participants'
+FROM 
+    empreses e
+JOIN 
+    persones p ON e.id = p.empresa_id
+JOIN 
+    persones_activitats pa ON p.id = pa.persona_id
+JOIN
+    ubicacions u ON e.id = u.empresa_id
+JOIN
+    activitats a ON pa.activitat_id = a.id
+WHERE 
+    a.tipus = 'Tallers i cursos de formació'
+GROUP BY 
+    e.id, u.municipi, u.poligon
+ORDER BY 
+    COUNT(DISTINCT pa.persona_id) DESC;
+-->
+            <li class="query-item">
+                <span>Llistat de treballadors que han participat a cada curs/taller:</span>
+                <button class="query-button" onclick="executarConsulta('taller4')">Consultar</button>
+            </li>
+            <table id="taller4-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="taller4-container">
+                </tbody>
+            </table>
+            <!--SELECT 
+    p.nom AS 'Nom treballador',
+    p.cognoms AS 'Cognoms treballador',
+    e.nom AS Empresa,
+    a.nom AS 'Temàtica del taller/formació',
+    a.data_inici AS 'Data del taller',
+    (SELECT COUNT(DISTINCT p2.id) 
+     FROM persones p2
+     JOIN persones_activitats pa2 ON p2.id = pa2.persona_id
+     JOIN activitats a2 ON pa2.activitat_id = a2.id
+     WHERE a2.tipus = 'Tallers i cursos de formació') AS 'Total de treballadors'
+FROM 
+    persones p
+JOIN 
+    empreses e ON p.empresa_id = e.id
+JOIN 
+    persones_activitats pa ON p.id = pa.persona_id
+JOIN 
+    activitats a ON pa.activitat_id = a.id
+WHERE 
+    a.tipus = 'Tallers i cursos de formació'
+ORDER BY 
+    a.data_inici DESC, e.nom, p.cognoms, p.nom;
+-->
+            <li class="query-item">
+                <span>Llistat d'empreses noves (que no havien participat anteriorment a cursos/tallers):</span>
+                <button class="query-button" onclick="executarConsulta('taller5')">Consultar</button>
+            </li>
+            <table id="taller5-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="taller5-container">
+                </tbody>
+            </table>
+            <!--WITH primera_participacio AS (
+    SELECT 
+        ea.empresa_id,
+        MAX(a.data_inici) AS primera_participacio_data
+    FROM empreses_activitats ea
+    JOIN activitats a ON ea.activitat_id = a.id
+    WHERE a.tipus = 'Tallers i cursos de formació'
+    GROUP BY ea.empresa_id
+),
+ultim_esmorzar AS (
+    SELECT MAX(data_inici) AS ultima_data
+    FROM activitats
+    WHERE tipus = 'Tallers i cursos de formació'
+)
+SELECT 
+    e.id AS id_empresa,
+    e.nom AS nom_empresa
+FROM empreses e
+JOIN primera_participacio fe ON e.id = fe.empresa_id
+JOIN ultim_esmorzar ee ON fe.primera_participacio_data = ee.ultima_data
+ORDER BY e.nom;
+-->
+            <li class="query-item">
+                <span>Llistat de treballadors nous (que no han participat anteriorment en cursos/tallers):</span>
+                <button class="query-button" onclick="executarConsulta('taller6')">Consultar</button>
+            </li>
+            <table id="taller6-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="taller6-container">
+                </tbody>
+            </table>
+            <!--WITH primera_participacio AS (
+    SELECT 
+        pa.persona_id,
+        MAX(a.data_inici) AS primera_participacio_data
+    FROM persones_activitats pa
+    JOIN activitats a ON pa.activitat_id = a.id
+    WHERE a.tipus = 'Tallers i cursos de formació'
+    GROUP BY pa.persona_id
+),
+ultim_esmorzar AS (
+    SELECT MAX(data_inici) AS ultima_data
+    FROM activitats
+    WHERE tipus = 'Tallers i cursos de formació'
+)
+SELECT 
+    p.id AS id_persona,
+    CONCAT(p.nom, ' ', p.cognoms) AS nom_persona
+FROM persones p
+JOIN primera_participacio fe ON p.id = fe.persona_id
+JOIN ultim_esmorzar ee ON fe.primera_participacio_data = ee.ultima_data
+ORDER BY p.nom;
+-->
+        </ul>
+    </div>
+
+    <script>
+        async function executarConsulta(queryType) {
+            const response = await fetch(`/${encodeURIComponent(queryType)}`);
+            if (!response.ok) {
+                console.error("Error fetching data:", response.statusText);
+                return;
+            }
+
+            const data = await response.json();
+            console.log("Returned data:", data);
+            insertData(data, queryType)
+        }
+
+        function insertData(data, queryType) {
+            let container;
+            let table;
+
+            if (queryType === 'esmorzar1') {
+                container = document.getElementById('esmorzar1-container');
+                table = document.getElementById('esmorzar1-table');
+            } else if (queryType === 'esmorzar2') {
+                container = document.getElementById('esmorzar2-container');
+                table = document.getElementById('esmorzar2-table');
+            } else if (queryType === 'esmorzar3') {
+                container = document.getElementById('esmorzar3-container');
+                table = document.getElementById('esmorzar3-table');
+            } else if (queryType === 'esmorzar4') {
+                container = document.getElementById('esmorzar4-container');
+                table = document.getElementById('esmorzar4-table');
+            } else if (queryType === 'esmorzar5') {
+                container = document.getElementById('esmorzar5-container');
+                table = document.getElementById('esmorzar5-table');
+            } else if (queryType === 'esmorzar6') {
+                container = document.getElementById('esmorzar6-container');
+                table = document.getElementById('esmorzar6-table');
+            } else if (queryType === 'esmorzar7') {
+                container = document.getElementById('esmorzar7-container');
+                table = document.getElementById('esmorzar7-table');
+            } else if (queryType === 'esmorzar8') {
+                container = document.getElementById('esmorzar8-container');
+                table = document.getElementById('esmorzar8-table');
+            } else if (queryType === 'esmorzar9') {
+                container = document.getElementById('esmorzar9-container');
+                table = document.getElementById('esmorzar9-table');
+            }
+            
+            // Clear previous data
+            container.innerHTML = '';
+            const headers = Object.keys(data[0]); // Get the keys from the first object for headers
+
+            // Create table header if it doesn't exist
+            if (table.querySelector('thead tr').children.length === 0) {
+                const headerRow = table.querySelector('thead tr');
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header.charAt(0).toUpperCase() + header.slice(1); // Capitalize the first letter
+                    headerRow.appendChild(th);
+                });
+            }
+
+            // Populate table with data
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                headers.forEach(header => {
+                    const cell = document.createElement('td');
+                    cell.textContent = item[header]; // Use the key to get the value
+                    row.appendChild(cell);
+                });
+
+                container.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

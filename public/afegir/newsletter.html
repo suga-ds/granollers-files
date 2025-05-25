@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Newsletters - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+        
+        h2 {
+            color: #77b5a9;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #004f5a;
+            margin-bottom: 20px;
+        }
+        
+        .section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            margin-top: 30px;
+            margin-left: 30px;
+            margin-right: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .form-group {
+            margin-top: 20px;
+           margin-bottom: 20px;
+           margin-right: 20px;
+           margin-left: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                display: block;
+                margin: 20px auto;
+                transition: background-color 0.3s;
+                width: 200px;
+            }
+            
+        button:hover {
+            background-color: #003d44;
+        }
+        
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        
+        .recipient-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .Titulos {
+            text-align: center; /* Centra el contenido horizontalmente */
+            margin: 0 auto; /* Centra el contenedor en la página */
+            max-width: 600px; /* Opcional: define un ancho máximo */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra los elementos hijos */
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .recipient-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-right: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class = "Titulos" >
+
+        <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+        <h1>Afegir Newsletter</h1>
+    </div>    
+    
+    <!-- Formulari per crear nova newsletter -->
+    <div class="section">
+        <h2>Crear Nova Newsletter</h2>
+        <form id="newsletterForm">
+                
+                <div class="form-group">
+                    <label for="nom_newsletter" class="required">Nom de la newsletter:</label>
+                    <input type="text" id="nom_newsletter" name="nom_newsletter" required>
+                </div>
+            
+            <div class="form-group">
+                <label for="data_publicacio" class="required">Data de publicació:</label>
+                <input type="date" id="data_publicacio" name="data_publicacio" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcio">Descripció:</label>
+                <textarea id="descripcio" name="descripcio"></textarea>
+            </div>
+    </div>
+
+    <div class ="section" >   
+            
+
+            <h3>Subscriptors que han rebut la Newsletter</h3>
+            <div id="persones-container">
+                <label>Nom Subscriptors:</label>
+                <div class="participant-input">
+                    <input type="text" name="subscripcions_Newsletters[][id_subscriptor]" placeholder="nom del subscriptor" min="1">
+                </div>
+            </div>
+            <button type="button" class="btn" onclick="
+                const container = document.getElementById('persones-container');
+                const newInput = document.createElement('div');
+                newInput.className = 'participant-input';
+                newInput.innerHTML = `
+                    <input type='text' name='subscripcions_Newsletters[][id_subscriptor]' placeholder='nom del subscriptor' min='1'>
+                    <button type='button' class='btn-remove' onclick='this.parentElement.remove()'>Eliminar</button>
+                `;
+                container.appendChild(newInput);
+            ">Afegir persona</button>
+            <div class="error-message" id="subscriptors_error"></div>
+            
+    </div>           
+            
+            <button type="submit">Guardar Newsletter</button>
+        </form>
+
+    
+</body>
+</html>

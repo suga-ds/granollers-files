@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afegir Activitats - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #003d44;
+        }
+
+        .required:after {
+            content: " *";
+            color: red;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .three-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .participants-list {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .participant-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .back-button {
+            background-color: #003d44;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+
+        @media (max-width: 768px) {
+
+            .two-columns,
+            .three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+    <h1>Gestió d'Activitats</h1>
+
+    <form action="/activitat/afegir" method="post">
+        <!-- Secció Activitats -->
+        <div class="form-section">
+            <h2>Dades de l'Activitat</h2>
+            <div class="form-group">
+                <label for="nom" class="required">Nom de l'activitat:</label>
+                <input type="text" id="nom_activitat" name="nom" required>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcio">Descripció:</label>
+                <textarea id="descripcio" name="descripcio"></textarea>
+            </div>
+
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="data_inici" class="required">Data d'inici:</label>
+                    <input type="date" id="data_inici" name="data_inici" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_fi" class="required">Data de fi:</label>
+                    <input type="date" id="data_fi" name="data_fi" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="tipus" class="required">Tipus d'activitat:</label>
+                <select id="nom_tipus" name="tipus" required>
+                    <option value="">-- Selecciona un tipus --</option>
+                    <option value="Esmorzars GRID">Esmorzars GRID</option>
+                    <option value="Tallers i cursos de formació">Tallers i cursos de formació</option>
+                    <option value="Evc Labs">Evc Labs</option>
+                    <option value="Cercle Grid">Cercle Grid</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Secció Empreses Participants -->
+        <div class="form-section">
+            <h2>Empreses Participants</h2>
+            <div id="empreses-container">
+                <label>Empreses</label>
+                <div class="participant-input">
+                    <input type="text" name="empreses[0][nom]" placeholder="Nom d'empresa" required>
+                    <button type="button" id="afegir-empresa">Afegir empresa</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secció Persones Participants -->
+        <div class="form-section">
+            <h2>Persones Participants</h2>
+            <div id="persones-container">
+                <label>Persones</label>
+                <div class="participant-input">
+                    <input type="text" name="persones[0][nom]" placeholder="Nom de la persona" required>
+                    <button type="button" id="afegir-persona">Afegir Persona</button>
+                </div>
+            </div>
+        </div>       
+     
+        <!-- Botó d'enviament -->
+        <button type="submit">Guardar activitat</button>
+    </form>
+
+    <script>
+        let empresaCount = 1;
+
+        document.getElementById('afegir-empresa').addEventListener('click', function () {
+            empresaCount++;
+            const newEmpresa = `
+                <h2>Empresa ${empresaCount}</h2>
+                <div>
+                    <label for="empresa_${empresaCount}" class="required">Empresa:</label>
+                    <input type="text" id="empresa_${empresaCount}" name="empreses[${empresaCount - 1}][nom]" required>
+                </div>
+            `;
+            document.getElementById('empreses-container').insertAdjacentHTML('beforeend', newEmpresa);
+        });
+        
+        let personaCount = 1;
+
+        document.getElementById('afegir-persona').addEventListener('click', function () {
+            personaCount++;
+            const newPersona = `
+                <h2>Persona ${personaCount}</h2>
+                <div>
+                    <label for="persona_${personaCount}" class="required">Persona:</label>
+                    <input type="text" id="persona_${personaCount}" name="persones[${personaCount - 1}][nom]" required>
+                </div>
+            `;
+            document.getElementById('persones-container').insertAdjacentHTML('beforeend', newPersona);
+        });
+    </script>
+
+
+</body>
+
+</html>

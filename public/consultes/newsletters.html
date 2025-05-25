@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter i Xarxes GRID - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+        
+        h1, h2 {
+            color: var(--primary-color);
+        }
+        
+        .back-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .back-button:hover {
+            background-color: #003d44;
+        }
+        
+        .period-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .period-section h2 {
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .query-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .query-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--secondary-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .query-button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .query-button:hover {
+            background-color: #003d44;
+        }
+        
+        .social-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .social-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .social-card h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+        
+        .social-card p {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .social-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+    
+    <h1>Newsletter i Xarxes GRID</h1>
+    
+    newsletter:
+    <div class="period-section">
+        <h2>Total</h2>
+        <ul class="query-list">
+            <li class="query-item">
+                <span>Nombre de Newsletters enviades:</span>
+                <button class="query-button" onclick="executarConsulta('newsletter1')">Consultar</button>
+            </li>
+            <table id="newsletter1-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="newsletter1-container">
+                </tbody>
+            </table>
+<!--SELECT 
+    id AS id_newsletter,
+    nom AS nom_newsletter,
+    data_publicacio,
+    descripcio
+FROM newsletters
+ORDER BY data_publicacio DESC;
+-->
+            <li class="query-item">
+                <span>Subscriptors que reben la Newsletter:</span>
+                <button class="query-button" onclick="executarConsulta('newsletter2')">Consultar</button>
+            </li>
+            <table id="newsletter2-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="newsletter2-container">
+                </tbody>
+            </table><!--SELECT 
+    s.id AS id_suscriptor,
+    s.email,
+    s.data_alta,
+    COUNT(n.id) AS newsletters_rebudes
+FROM subscripcions s
+LEFT JOIN subscripcions_Newsletters sn ON s.id = sn.subscriptor_id
+LEFT JOIN newsletters n ON sn.newsletters_id = n.id
+WHERE s.inscrit_newsletter = 'Sí'
+GROUP BY s.id, s.email, s.data_alta
+ORDER BY s.data_alta DESC;
+-->
+            <li class="query-item">
+                <span>Nombre de Newsletters que ha rebut cada subscriptor:</span>
+                <button class="query-button" onclick="executarConsulta('newsletter3')">Consultar</button>
+            </li>
+            <table id="newsletter3-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="newsletter3-container">
+                </tbody>
+            </table><!--SELECT 
+    s.id AS subscriptor_id,
+    s.email,
+    COUNT(sn.newsletters_id) AS num_newsletters_recibidas
+FROM subscripcions s
+LEFT JOIN subscripcions_Newsletters sn ON s.id = sn.subscriptor_id
+GROUP BY s.id, s.email
+ORDER BY num_newsletters_recibidas DESC;
+-->
+            <li class="query-item">
+                <span>Empreses segueixen en Instagram o Linkedin:</span>
+                <button class="query-button" onclick="executarConsulta('newsletter4')">Consultar</button>
+            </li>
+            <table id="newsletter4-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="newsletter4-container">
+                </tbody>
+            </table><!--SELECT 
+    e.id,
+    e.nom,
+    e.telefon,
+    e.email,
+    e.web,
+    e.segueix_instagram,
+    e.segueix_linkedin
+FROM empreses e
+WHERE e.segueix_instagram = 'Si' OR e.segueix_linkedin = 'Si';
+-->
+            <li class="query-item">
+                <span>Persones segueixen en Instagram o Linkedin:</span>
+                <button class="query-button" onclick="executarConsulta('newsletter5')">Consultar</button>
+            </li>
+            <table id="newsletter5-table">
+                <thead>
+                    <tr>
+                    </tr>
+                </thead>
+                <tbody id="newsletter5-container">
+                </tbody>
+            </table><!--SELECT 
+    p.id,
+    p.nom,
+    p.cognoms,
+    p.telefon,
+    p.email,
+    p.carrec,
+    p.segueix_instagram,
+    p.segueix_linkedin
+FROM persones p
+WHERE p.segueix_instagram = 'Si' or p.segueix_linkedin = 'Si';
+-->
+        </ul>
+    </div>  
+
+    <script>
+        async function executarConsulta(queryType) {
+            const response = await fetch(`/${encodeURIComponent(queryType)}`);
+            if (!response.ok) {
+                console.error("Error fetching data:", response.statusText);
+                return;
+            }
+
+            const data = await response.json();
+            console.log("Returned data:", data);
+            insertData(data, queryType)
+        }
+
+        function insertData(data, queryType) {
+            let container;
+            let table;
+
+            if (queryType === 'esmorzar1') {
+                container = document.getElementById('esmorzar1-container');
+                table = document.getElementById('esmorzar1-table');
+            } else if (queryType === 'esmorzar2') {
+                container = document.getElementById('esmorzar2-container');
+                table = document.getElementById('esmorzar2-table');
+            } else if (queryType === 'esmorzar3') {
+                container = document.getElementById('esmorzar3-container');
+                table = document.getElementById('esmorzar3-table');
+            } else if (queryType === 'esmorzar4') {
+                container = document.getElementById('esmorzar4-container');
+                table = document.getElementById('esmorzar4-table');
+            } else if (queryType === 'esmorzar5') {
+                container = document.getElementById('esmorzar5-container');
+                table = document.getElementById('esmorzar5-table');
+            } else if (queryType === 'esmorzar6') {
+                container = document.getElementById('esmorzar6-container');
+                table = document.getElementById('esmorzar6-table');
+            } else if (queryType === 'esmorzar7') {
+                container = document.getElementById('esmorzar7-container');
+                table = document.getElementById('esmorzar7-table');
+            } else if (queryType === 'esmorzar8') {
+                container = document.getElementById('esmorzar8-container');
+                table = document.getElementById('esmorzar8-table');
+            } else if (queryType === 'esmorzar9') {
+                container = document.getElementById('esmorzar9-container');
+                table = document.getElementById('esmorzar9-table');
+            }
+            
+            // Clear previous data
+            container.innerHTML = '';
+            const headers = Object.keys(data[0]); // Get the keys from the first object for headers
+
+            // Create table header if it doesn't exist
+            if (table.querySelector('thead tr').children.length === 0) {
+                const headerRow = table.querySelector('thead tr');
+                headers.forEach(header => {
+                    const th = document.createElement('th');
+                    th.textContent = header.charAt(0).toUpperCase() + header.slice(1); // Capitalize the first letter
+                    headerRow.appendChild(th);
+                });
+            }
+
+            // Populate table with data
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                headers.forEach(header => {
+                    const cell = document.createElement('td');
+                    cell.textContent = item[header]; // Use the key to get the value
+                    row.appendChild(cell);
+                });
+
+                container.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+</html>

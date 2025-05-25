@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultes del Mercat de Recursos - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .activity-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+        
+        .activity-card h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+        
+        .activity-card button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .activity-card button:hover {
+            background-color: #003d44;
+        }
+        
+        .period-selector {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .period-selector select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid var(--secondary-color);
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+ 
+    <h1>Consultes del Mercat de Recursos</h1>
+
+    
+    <div class="activity-grid">
+        <div class="activity-card">
+            <h2>Recursos Ofertats</h2>
+            <p>Consulta les estadístiques i llistats dels recursos ofertats</p>
+            <button onclick="location.href='ofertats.html'">Accedir</button>
+        </div>
+        
+        <div class="activity-card">
+            <h2>Recursos reaprofitats</h2>
+            <p>Consulta les estadístiques i llistats dels recursos reaprofitats</p>
+            <button onclick="location.href='reaprofitats.html'">Accedir</button>
+        </div>
+        
+    </div>
+</body>
+</html>

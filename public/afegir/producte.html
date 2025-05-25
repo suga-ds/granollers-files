@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Productes - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            /* Color principal para botones */
+            --secondary-color: #77b5a9;
+            /* Color para títulos de sección */
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #003d44;
+        }
+
+        .required:after {
+            content: " *";
+            color: red;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .three-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+
+        .materials-list {
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .material-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .material-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+
+            .two-columns,
+            .three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+
+    <h1>Gestió de Productes i Materials</h1>
+
+    <form action="/producte/afegir" method="post">
+        <!-- Secció Productes -->
+        <div class="form-section">
+            <h2>Dades del Producte</h2>
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <input type="text" id="nom_producte" name="nom" required>
+                </div>
+            </div>
+
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="estat_producte">Estat:</label>
+                    <select id="estat_producte" name="estat" required>
+                        <option value="">-- Selecciona un estat --</option>
+                        <option value="disponible">Disponible</option>
+                        <option value="parcialment reaprofitat">Parcialment reaprofitat</option>
+                        <option value="reaprofiat">Reaprofiat</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="data_publicacio">Data de publicació:</label>
+                    <input type="date" id="data_publicacio" name="data_publicacio">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcio">Descripció:</label>
+                <textarea id="descripcio" name="descripcio"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="tipus">Tipus de Recurs:</label>
+                <textarea id="tipus" name="tipus"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="empresa_nom" class="required">Nom de l'empresa donadora:</label>
+                <input type="text" id="empresa_id" name="empresa_nom">
+            </div>
+
+
+
+
+            <!-- Secció Materials -->
+            <div id="materials-container">
+
+                <h2>Material</h2>
+                <div class="form-group">
+                    <div id="materials-container">
+                        <label for="nom" class="required">Nom:</label>
+                        <select id="nom" name="materials[0][nom]" required>
+                            <option value="">-- Selecciona un estat --</option>
+                            <option value="coto">Coto</option>
+                            <option value="llana">Llana</option>
+                            <option value="seda">Seda</option>
+                            <option value="poliester">Poliester</option>
+                            <option value="fusta">Fusta</option>
+                            <option value="plastic">Plastic</option>
+                            <option value="polietile">Polietile</option>
+                            <option value="vidre">Vidre</option>
+                            <option value="ceramica_porcellana">Ceramica/Porcellana</option>
+                            <option value="acer">Acer</option>
+                            <option value="alumini">Alumini</option>
+                            <option value="aparells_electronics">Aparells electronics</option>
+                            <option value="televisors">Televisors</option>
+                            <option value="telefons">Telefonos</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button type="button" id="add-material">Afegir material</button>
+
+        <script>
+            let materialCount = 1;
+
+            document.getElementById('add-material').addEventListener('click', function () {
+                materialCount++;
+                const newMaterial = `
+                    <h2>Material ${materialCount}</h2>
+                    <div class="form-group">
+                        <label for="nom_${materialCount}" class="required">Nom:</label>
+                        <select id="nom_${materialCount}" name="materials[${materialCount - 1}][nom]" required>
+                            <option value="">-- Selecciona un material --</option>
+                            <option value="coto">Coto</option>
+                            <option value="llana">Llana</option>
+                            <option value="seda">Seda</option>
+                            <option value="poliester">Poliester</option>
+                            <option value="fusta">Fusta</option>
+                            <option value="plastic">Plastic</option>
+                            <option value="polietile">Polietile</option>
+                            <option value="vidre">Vidre</option>
+                            <option value="ceramica_porcellana">Ceramica/Porcellana</option>
+                            <option value="acer">Acer</option>
+                            <option value="alumini">Alumini</option>
+                            <option value="aparells_electronics">Aparells electronics</option>
+                            <option value="televisors">Televisors</option>
+                            <option value="telefonos">Telefonos</option>
+                        </select>
+                    </div>                
+                `;
+                document.getElementById('materials-container').insertAdjacentHTML('beforeend', newMaterial);
+            });
+        </script>
+
+        <!-- Botó d'enviament -->
+        <button type="submit">Guardar producte</button>
+    </form>
+
+
+</body>
+
+</html>

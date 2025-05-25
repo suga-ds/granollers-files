@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Transaccions - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            --secondary-color: #77b5a9;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --error-color: #e74c3c;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background-color: #003d44;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: var(--error-color);
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .required:after {
+            content: " *";
+            color: var(--error-color);
+        }
+
+        .grid-columns {
+            display: grid;
+            gap: 20px;
+        }
+
+        .two-columns {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .three-columns {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+
+            .two-columns,
+            .three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+
+    <h1>Registre de Transaccions</h1>
+
+    <form id="transaccioForm" action="/transaccio/afegir" method="post">
+        <!-- Secció Transacció -->
+        <div class="form-section">
+            <h2>Dades de la Transacció</h2>
+            <div class="grid-columns two-columns">
+                <div class="form-group">
+                    <label for="producte_nom">Nom del Producte:</label>
+                    <input type="text" id="producte_nom" name="producte_nom">
+                </div>
+                <div class="form-group">
+                    <label for="empresa_receptora">Nom de l'Empresa receptora:</label>
+                    <input type="text" id="empresa_receptora" name="empresa_receptora">
+                </div>
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="data_lliurament">Data de lliurament:</label>
+                    <input type="date" id="data_lliurament" name="data_lliurament">
+                </div>
+                <div class="form-group">
+                    <label for="estat_transaccio">Estat:</label>
+                    <select id="estat_transaccio" name="estat_transaccio" required>
+                        <option value="">-- Selecciona --</option>
+                        <option value="pendent">Pendent</option>
+                        <option value="en_proces">En procés</option>
+                        <option value="completada">Completada</option>
+                        <option value="cancel·lada">Cancel·lada</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="observacions">Observacions:</label>
+                    <textarea id="observacions" name="observacions"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="quantitat">Quantitat:</label>
+                    <input type="number" id="quantitat" name="quantitat" required>
+                </div>
+                <div class="form-group">
+                    <label for="impacte_CO2" >Impacte en CO2 (només números):</label>
+                    <input type="number" id="impacte_CO2" name="impacte_CO2" required>
+                </div>
+                <div class="form-group">
+                    <label for="impacte_economic" >Impacte Econòmic (només números):</label>
+                    <input type="number" id="impacte_economic" name="impacte_economic" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="estat_aprofitament">Estat d'aprofitament:</label>
+                <select id="estat_aprofitament" name="estat_aprofitament" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="parcialment reaprofitat">Parcialment reaprofitat</option>
+                    <option value="reaprofiat">Reaprofiat</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Secció Mencions Web -->
+        <div class="form-section">
+            <h2>Mencions Web</h2>
+
+            <div class="form-group">
+                <label for="publicat_GRID">Publicat a GRID:</label>
+                <select id="publicat_GRID" name="publicat_GRID">
+                    <option value="">-- Selecciona --</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="espai_GRID">Espai GRID:</label>
+                <select id="espai_GRID" name="espai_GRID">
+                    <option value="">-- Selecciona --</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="GRIDees">GRIDees:</label>
+                <select id="GRIDees" name="GRIDees">
+                    <option value="">-- Selecciona --</option>
+                    <option value="1">Sí</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Botons d'acció -->
+        <div style="text-align: center; margin-top: 40px;">
+            <button type="submit" class="btn">Guardar Transacció</button>
+        </div>
+    </form>
+</body>
+
+</html>

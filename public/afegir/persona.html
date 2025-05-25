@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afegir Persona</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;  /* Color principal para botones */
+            --secondary-color: #77b5a9;  /* Color para títulos de sección */
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .form-section h2 {
+            color: var(--secondary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--light-color);
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        input[type="url"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 20px auto;
+            transition: background-color 0.3s;
+            width: 200px;
+        }
+        
+        button:hover {
+            background-color: #003d44;
+        }
+        
+        .required:after {
+            content: " *";
+            color: red;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .three-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-columns, .three-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+
+    <h1>Afegir Persones</h1>
+    
+    <form action="/persona/afegir" method="post">
+        <!-- Secció Persones -->
+        <div class="form-section">
+            <h2>Dades de la Persona</h2>
+            <div class="three-columns">
+                <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <input type="text" id="nom_persona" name="nom" required>
+                </div>
+                <div class="form-group">
+                    <label for="cognoms">Cognoms:</label>
+                    <input type="text" id="cognoms" name="cognoms" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefon">Telèfon:</label>
+                    <input type="tel" id="telefon" name="telefon">
+                </div>
+            </div>
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div class="form-group">
+                    <label for="carrec">Càrrec:</label>
+                    <input type="text" id="carrec" name="carrec">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="empresa_nom">Nom empresa:</label>
+                <input type="text" id="empresa_id" name="empresa_nom">
+            </div>
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="segueix_instagram">Segueix a Instagram?</label>
+                    <select id="instagram" name="segueix_instagram">
+                        <option value="Sí">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="segueix_linkedin">Segueix a LinkedIn?</label>
+                    <select id="linkedin" name="segueix_linkedin">
+                        <option value="Sí">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Botó d'enviament -->
+        <button type="submit">Guardar dades</button>
+    </form>
+</body>
+</html>

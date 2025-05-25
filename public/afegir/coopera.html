@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestió de Serveis Coopera - GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            /* Color principal para botones */
+            --secondary-color: #77b5a9;
+            /* Color para títulos de sección */
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        input[type="url"],
+        input[type="hidden"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 40px auto;
+            transition: background-color 0.3s;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #003d44;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+
+    <h1>Gestió de Serveis Coopera</h1>
+
+    <form id="serveiForm" action="/coopera/afegir" method="post">
+        <!-- Secció Serveis Coopera -->
+        <div class="form-section">
+            <h2>Dades del Servei</h2>
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="titol" class="required">Títol del servei:</label>
+                    <input type="text" id="titol" name="titol" required>
+                    <div class="error-message" id="titol_error"></div>
+                </div>
+                <div class="form-group">
+                    <label for="data_inici" class="required">Data d'inici:</label>
+                    <input type="date" id="data_inici" name="data_inici" required>
+                    <div class="error-message" id="data_error"></div>
+                </div>
+            </div>
+
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="impacte_energia" class="required">Impacte d'energia que ha tingut el servei:</label>
+                    <input type="text" id="impacte_energia" name="impacte_energia" required>
+                </div>
+                <div class="form-group">
+                    <label for="impacte_aigua" class="required">Impacte d'aigua que ha tingut el servei:</label>
+                    <input type="text" id="impacte_aigua" name="impacte_aigua" required>
+                    <div class="error-message" id="impacte_aigua_error"></div>
+                </div>
+            </div>
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="impacte_emissions" class="required">Impacte d'emissions (CO2) que ha tingut el
+                        servei:</label>
+                    <input type="text" id="impacte_emissions" name="impacte_emissions" required>
+                </div>
+                <div class="form-group">
+                    <label for="impacte_economic" class="required">Impacte econòmic que ha tingut el servei:</label>
+                    <input type="text" id="impacte_economic" name="impacte_economic" required>
+                    <div class="error-message" id="impacte_economic_error"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="detalls" class="required">Detalls del servei:</label>
+                <textarea id="detalls" name="detalls" required></textarea>
+                <div class="error-message" id="detalls_error"></div>
+            </div>
+        </div>
+
+        <!-- Secció Empreses Participants -->
+        <div class="form-section">
+            <h2>Empreses Participants</h2>
+            <div id="empreses-container">
+                <div class="participant-input">
+                    <input type="text" name="empreses[0][nom]" placeholder="Nom d'empresa" required>
+                    <button type="button" class="btn-remove" onclick="this.parentElement.remove()">Eliminar</button>
+                </div>
+            </div>
+            <button type="button" class="btn" onclick="afegirParticipant('empreses-container', 'empresa')">Afegir
+                empresa</button>
+            <div class="error-message" id="empreses_error"></div>
+        </div>
+
+        <!-- Secció Persones Participants -->
+        <div class="form-section">
+            <h2>Persones Participants</h2>
+            <div id="persones-container">
+                <div class="participant-input">
+                    <input type="text" name="persones[0][nom]" placeholder="Nom de persona" required>
+                    <button type="button" class="btn-remove" onclick="this.parentElement.remove()">Eliminar</button>
+                </div>
+            </div>
+            <button type="button" class="btn" onclick="afegirParticipant('persones-container', 'persones')">Afegir
+                persona</button>
+            <div class="error-message" id="persones_error"></div>
+        </div>
+        <!-- Botó d'enviament -->
+        <button type="submit">Guardar servei</button>
+    </form>
+
+    <script>
+        function afegirParticipant(containerId, participantType) {
+            const container = document.getElementById(containerId);
+            const index = container.children.length; // Get the current number of participants
+            const input = document.createElement('div');
+            input.className = 'participant-input';
+            input.innerHTML = `<input type="text" name="${participantType}[${index}][nom]" placeholder="Nom de ${participantType === 'empreses' ? 'empresa' : 'persona'}" required>
+                       <button type="button" class="btn-remove" onclick="this.parentElement.remove()">Eliminar</button>`;
+            container.appendChild(input);
+        }
+    </script>
+</body>
+
+</html>

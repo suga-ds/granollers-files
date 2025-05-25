@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulari GRID Granollers</title>
+    <style>
+        :root {
+            --primary-color: #004f5a;
+            /* Color principal para botones */
+            --secondary-color: #77b5a9;
+            /* Color para títulos de sección */
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        input[type="number"],
+        input[type="url"],
+        input[type="hidden"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 40px auto;
+            transition: background-color 0.3s;
+            width: 200px;
+        }
+
+        button:hover {
+            background-color: #003d44;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+    <h1>Dades de l'Empresa</h1>
+
+    <form action="/empresa/afegir" method="post">
+        <div class="form-section">
+
+            <div class="form-group">
+                <label for="nom" class="required">Nom de l'empresa:</label>
+                <input type="text" id="nom" name="nom" required>
+            </div>
+
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="telefon">Telèfon:</label>
+                    <input type="text" id="telefon" name="telefon" placeholder="Format: 1234567">
+                </div>
+                <div class="form-group">
+                    <label for="email" class="required">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="web">Lloc web:</label>
+                <input type="url" id="web" name="web" placeholder="Format: https://google.com">
+            </div>
+
+            <div class="form-group">
+                <label for="data_alta" class="required">Data d'alta:</label>
+                <input type="date" id="data_alta" name="data_alta" required>
+            </div>
+
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="segueix_instagram">Segueix a Instagram:</label>
+                    <select id="segueix_instagram" name="segueix_instagram">
+                        <option value="">-- Selecciona un tipus --</option>
+                        <option value="Si">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="segueix_linkedin">Segueix a LinkedIn:</label>
+                    <select id="segueix_linkedin" name="segueix_linkedin">
+                        <option value="">-- Selecciona un tipus --</option>
+                        <option value="Si">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="nom_tipus" class="required">Tipus d'empresa:</label>
+                <select id="nom_tipus" name="tipus" required>
+                    <option value="">-- Selecciona un tipus --</option>
+                    <option value="Empresa">Empresa</option>
+                    <option value="Entitat social">Entitat social</option>
+                    <option value="Centre educatiu">Centre educatiu</option>
+                    <option value="Universitat / Centre de recerca">Universitat / Centre de recerca</option>
+                    <option value="Administracio">Administració</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="nom_rol" class="required">Rol:</label>
+                <select id="nom_rol" name="rol" required>
+                    <option value="">-- Selecciona un rol --</option>
+                    <option value="Donadora">Donadora</option>
+                    <option value="Receptora">Receptora</option>
+                    <option value="Ambdues">Ambdues</option>
+                </select>
+            </div>
+
+            <!-- Ubicacions -->
+            <div id="locations-container">
+
+                <h2>Ubicacio</h2>
+                <div class="form-group">
+                    <label for="adreça_1" class="required">Adreça:</label>
+                    <input type="text" id="adreça_1" name="ubicacions[0][adreça]" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="municipi_1" class="required">Municipi:</label>
+                    <input type="text" id="municipi_1" name="ubicacions[0][municipi]" required>
+                </div>
+
+                <div class="two-columns">
+                    <div class="form-group">
+                        <label for="codi_postal_1" class="required">Codi postal:</label>
+                        <input type="text" id="codi_postal_1" name="ubicacions[0][codi_postal]" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="poligon_1">Polígon:</label>
+                        <input type="text" id="poligon_1" name="ubicacions[0][poligon]">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" id="add-location">Afegir ubicacio</button>
+
+            <script>
+                let locationCount = 1;
+
+                document.getElementById('add-location').addEventListener('click', function () {
+                    locationCount++;
+                    const newLocation = `
+                        <h2>Ubicacio ${locationCount}</h2>
+                        <div class="form-group">
+                            <label for="adreça_${locationCount}" class="required">Adreça:</label>
+                            <input type="text" id="adreça_${locationCount}" name="ubicacions[${locationCount - 1}][adreça]" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="municipi_${locationCount}" class="required">Municipi:</label>
+                            <input type="text" id="municipi_${locationCount}" name="ubicacions[${locationCount - 1}][municipi]" required>
+                        </div>
+                        
+                        <div class="two-columns">
+                            <div class="form-group">
+                                <label for="codi_postal_${locationCount}" class="required">Codi postal:</label>
+                                <input type="text" id="codi_postal_${locationCount}" name="ubicacions[${locationCount - 1}][codi_postal]" required>
+                            </div>
+                        
+                            <div class="form-group">
+                                <label for="poligon_${locationCount}">Polígon:</label>
+                                <input type="text" id="poligon_${locationCount}" name="ubicacions[${locationCount - 1}][poligon]">
+                            </div>
+                        </div>
+                    `;
+                    document.getElementById('locations-container').insertAdjacentHTML('beforeend', newLocation);
+                });
+            </script>
+
+            <!-- Botó d'enviament -->
+            <button type="submit">Enviar dades</button>
+    </form>
+</body>
+
+</html>

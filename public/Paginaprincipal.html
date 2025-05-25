@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRID Granollers - Sistema de Gestió</title>
+    <link href='./style.css' rel='stylesheet'>
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>GRID Granollers</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard">
+            <!-- Tarjeta Empresa -->
+            <div class="card">
+                <h2>Empreses</h2>
+                <p>Gestiona les dades de les empreses participants al projecte GRID.</p>
+
+                <div class="action-selector">
+                    <select id="empresa-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nova empresa</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('empresa')">Accedir</a>
+                </div>
+            </div>
+
+            <!-- Tarjeta Persones -->
+            <div class="card">
+                <h2>Persones</h2>
+                <p>Gestiona les dades de contacte de les persones participants.</p>
+
+                <div class="action-selector">
+                    <select id="persona-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nova persona</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('persona')">Accedir</a>
+                </div>
+            </div>
+
+            <!-- Tarjeta Productes -->
+            <div class="card">
+                <h2>Productes</h2>
+                <p>Gestiona els productes disponibles per a l'aprofitament.</p>
+
+                <div class="action-selector">
+                    <select id="producte-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nou producte</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('producte')">Accedir</a>
+                </div>
+            </div>
+
+            <!-- Tarjeta Activitats -->
+            <div class="card">
+                <h2>Activitats</h2>
+                <p>Gestiona esmorzars, tallers i altres activitats GRID.</p>
+
+                <div class="action-selector">
+                    <select id="activitat-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nova activitat</option>
+                        <option value="query">Consultes activitats</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('activitat')">Accedir</a>
+                </div>
+            </div>
+
+            <!-- Tarjeta Serveis -->
+            <div class="card">
+                <h2>Serveis Coopera</h2>
+                <p>Gestiona els serveis de cooperació entre empreses.</p>
+
+                <div class="action-selector">
+                    <select id="servei-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nou servei</option>
+                        <option value="query">Consultes serveis</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('servei')">Accedir</a>
+                </div>
+            </div>
+
+            <!-- Tarjeta Transaccions -->
+            <div class="card">
+                <h2>Transaccions</h2>
+                <p>Registra i segueix les transaccions de materials i recursos.</p>
+
+                <div class="action-selector">
+                    <select id="transaccio-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nova transacció</option>
+                        <option value="query">Consultes transaccions</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('transaccio')">Accedir</a>
+                </div>
+            </div>
+
+            <!-- Nova Tarjeta Newsletter -->
+            <div class="card">
+                <h2>Newsletter</h2>
+                <p>Gestiona les subscripcions i enviaments de newsletters.</p>
+
+                <div class="action-selector">
+                    <select id="newsletter-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nova newsletter</option>
+                        <option value="query">Consultes newsletters</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('newsletter')">Accedir</a>
+                </div>
+            </div>
+            <!-- Nou Subscriptor -->
+            <div class="card">
+                <h2>Subscripcions</h2>
+                <p>Gestiona les subscripcions.</p>
+
+                <div class="action-selector">
+                    <select id="subscripcio-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="add">Afegir nova subscripció</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('subscripcio')">Accedir</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Dades</h2>
+                <p>Mira totes les dades que hi ha registrades.</p>
+
+                <div class="action-selector">
+                    <select id="dades-action">
+                        <option value="">-- Selecciona acció --</option>
+                        <option value="query">Consultes les dades</option>
+                    </select>
+                    <a href="#" class="btn" onclick="handleNavigation('dades')">Accedir</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>Sistema de Gestió GRID Granollers &copy; 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        function handleNavigation(section) {
+            const actionSelect = document.getElementById(`${section}-action`);
+            const selectedAction = actionSelect.value;
+
+            if (!selectedAction) {
+                alert('Si us plau, selecciona una acció abans de continuar.');
+                return;
+            }
+
+            // Afegir
+
+            if (section === 'empresa' && selectedAction === 'add') {
+                window.location.href = './afegir/empresa.html';
+                return;
+            }
+
+            if (section === 'persona' && selectedAction === 'add') {
+                window.location.href = './afegir/persona.html';
+                return;
+            }
+
+            if (section === 'activitat' && selectedAction === 'add') {
+                window.location.href = './afegir/activitat.html';
+                return;
+            }
+
+            if (section === 'newsletter' && selectedAction === 'add') {
+                window.location.href = './afegir/newsletter.html';
+                return;
+            }
+
+            if (section === 'producte' && selectedAction === 'add') {
+                window.location.href = './afegir/producte.html';
+                return;
+            }
+
+            if (section === 'servei' && selectedAction === 'add') {
+                window.location.href = './afegir/coopera.html';
+                return;
+            }
+
+            if (section === 'subscripcio' && selectedAction === 'add') {
+                window.location.href = './afegir/subscripcio.html';
+                return;
+            }
+
+            if (section === 'transaccio' && selectedAction === 'add') {
+                window.location.href = './afegir/transaccio.html';
+                return;
+            }
+
+            // Consultes
+
+            if (section === 'transaccio' && selectedAction === 'query') {
+                window.location.href = './consultes/transaccions';
+                return;
+            }
+            if (section === 'servei' && selectedAction === 'query') {
+                window.location.href = './consultes/serveis.html';
+                return;
+            }
+            if (section === 'activitat' && selectedAction === 'query') {
+                window.location.href = './consultes/activitats';
+                return;
+            }
+
+            if (section === 'newsletter' && selectedAction === 'query') {
+                window.location.href = './consultes/newsletters.html';
+                return;
+            }
+
+            if (section === 'dades' && selectedAction === 'query') {
+                window.location.href = './consultes/dades.html';
+                return;
+            }
+
+            // Para todas las demás opciones, mostrar mensaje (temporal)
+            alert(`Funció en desenvolupament: ${section} - ${selectedAction}`);
+        }
+    </script>
+</body>
+
+</html>
