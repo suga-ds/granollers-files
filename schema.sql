@@ -1,21 +1,4 @@
-DROP TABLE IF EXISTS subscriptors_newsletters;
-DROP TABLE IF EXISTS subscriptors_empreses;
-DROP TABLE IF EXISTS subscriptors_persones;
-DROP TABLE IF EXISTS subscriptors;
-DROP TABLE IF EXISTS newsletters;
-DROP TABLE IF EXISTS persones_coopera;
-DROP TABLE IF EXISTS empreses_coopera;
-DROP TABLE IF EXISTS persones_activitats;
-DROP TABLE IF EXISTS empreses_activitats;
-DROP TABLE IF EXISTS transaccions;
-DROP TABLE IF EXISTS productes_materials;
-DROP TABLE IF EXISTS materials;
-DROP TABLE IF EXISTS productes;
-DROP TABLE IF EXISTS persones;
 DROP TABLE IF EXISTS ubicacions;
-DROP TABLE IF EXISTS empreses;
-DROP TABLE IF EXISTS activitats;
-DROP TABLE IF EXISTS coopera;
 
 CREATE TABLE empreses (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -188,7 +171,6 @@ INSERT INTO ubicacions (empresa_id, adreça, municipi, codi_postal, poligon) VAL
 (1, 'Carrer 2, 2', 'Barcelona', '08002', 'Poligon B'),
 (2, 'Carrer 3, 1', 'França', '08003', 'Poligon C'),
 (2, 'Carrer 4, 2', 'Girona', '08004', 'Poligon D');
-;
 
 -- Insert into persones
 INSERT INTO persones (nom, cognoms, telefon, email, carrec, segueix_instagram, segueix_linkedin, empresa_id) VALUES
@@ -263,4 +245,3 @@ INSERT INTO empreses_coopera (empresa_id, coopera_id) VALUES
 INSERT INTO persones_coopera (persona_id, coopera_id) VALUES
 (1, 1),
 (2, 2);
-
