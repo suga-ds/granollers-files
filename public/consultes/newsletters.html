@@ -138,13 +138,13 @@
                 <tbody id="newsletter1-container">
                 </tbody>
             </table>
-<!--SELECT 
-    id AS id_newsletter,
-    nom AS nom_newsletter,
-    data_publicacio,
-    descripcio
-FROM newsletters
-ORDER BY data_publicacio DESC;
+    <!--SELECT 
+        id AS id_newsletter,
+        nom AS nom_newsletter,
+        data_publicacio,
+        descripcio
+    FROM newsletters
+    ORDER BY data_publicacio DESC;
 -->
             <li class="query-item">
                 <span>Subscriptors que reben la Newsletter:</span>
@@ -254,33 +254,33 @@ WHERE p.segueix_instagram = 'Si' or p.segueix_linkedin = 'Si';
             let container;
             let table;
 
-            if (queryType === 'esmorzar1') {
-                container = document.getElementById('esmorzar1-container');
-                table = document.getElementById('esmorzar1-table');
-            } else if (queryType === 'esmorzar2') {
-                container = document.getElementById('esmorzar2-container');
-                table = document.getElementById('esmorzar2-table');
-            } else if (queryType === 'esmorzar3') {
-                container = document.getElementById('esmorzar3-container');
-                table = document.getElementById('esmorzar3-table');
-            } else if (queryType === 'esmorzar4') {
-                container = document.getElementById('esmorzar4-container');
-                table = document.getElementById('esmorzar4-table');
-            } else if (queryType === 'esmorzar5') {
-                container = document.getElementById('esmorzar5-container');
-                table = document.getElementById('esmorzar5-table');
-            } else if (queryType === 'esmorzar6') {
-                container = document.getElementById('esmorzar6-container');
-                table = document.getElementById('esmorzar6-table');
-            } else if (queryType === 'esmorzar7') {
-                container = document.getElementById('esmorzar7-container');
-                table = document.getElementById('esmorzar7-table');
-            } else if (queryType === 'esmorzar8') {
-                container = document.getElementById('esmorzar8-container');
-                table = document.getElementById('esmorzar8-table');
-            } else if (queryType === 'esmorzar9') {
-                container = document.getElementById('esmorzar9-container');
-                table = document.getElementById('esmorzar9-table');
+            if (queryType === 'newsletter1') {
+                container = document.getElementById('newsletter1-container');
+                table = document.getElementById('newsletter1-table');
+            } else if (queryType === 'newsletter2') {
+                container = document.getElementById('newsletter2-container');
+                table = document.getElementById('newsletter2-table');
+            } else if (queryType === 'newsletter3') {
+                container = document.getElementById('newsletter3-container');
+                table = document.getElementById('newsletter3-table');
+            } else if (queryType === 'newsletter4') {
+                container = document.getElementById('newsletter4-container');
+                table = document.getElementById('newsletter4-table');
+            } else if (queryType === 'newsletter5') {
+                container = document.getElementById('newsletter5-container');
+                table = document.getElementById('newsletter5-table');
+            } else if (queryType === 'newsletter6') {
+                container = document.getElementById('newsletter6-container');
+                table = document.getElementById('newsletter6-table');
+            } else if (queryType === 'newsletter7') {
+                container = document.getElementById('newsletter7-container');
+                table = document.getElementById('newsletter7-table');
+            } else if (queryType === 'newsletter8') {
+                container = document.getElementById('newsletter8-container');
+                table = document.getElementById('newsletter8-table');
+            } else if (queryType === 'newsletter9') {
+                container = document.getElementById('newsletter9-container');
+                table = document.getElementById('newsletter9-table');
             }
             
             // Clear previous data

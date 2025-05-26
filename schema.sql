@@ -1,7 +1,7 @@
-DROP TABLE IF EXISTS subscripcions_newsletters;
-DROP TABLE IF EXISTS subscripcions_empreses;
-DROP TABLE IF EXISTS subscripcions_persones;
-DROP TABLE IF EXISTS subscripcions;
+DROP TABLE IF EXISTS subscriptors_newsletters;
+DROP TABLE IF EXISTS subscriptors_empreses;
+DROP TABLE IF EXISTS subscriptors_persones;
+DROP TABLE IF EXISTS subscriptors;
 DROP TABLE IF EXISTS newsletters;
 DROP TABLE IF EXISTS persones_coopera;
 DROP TABLE IF EXISTS empreses_coopera;
@@ -9,6 +9,7 @@ DROP TABLE IF EXISTS persones_activitats;
 DROP TABLE IF EXISTS empreses_activitats;
 DROP TABLE IF EXISTS transaccions;
 DROP TABLE IF EXISTS productes_materials;
+DROP TABLE IF EXISTS materials;
 DROP TABLE IF EXISTS productes;
 DROP TABLE IF EXISTS persones;
 DROP TABLE IF EXISTS ubicacions;
@@ -122,12 +123,33 @@ CREATE TABLE newsletters (
     descripcio TEXT
 );
 
-CREATE TABLE subscripcions (
-    persona_id INTEGER,
-    newsletter_id INTEGER,
+CREATE TABLE subscriptors (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    email TEXT,
     data_alta TEXT,
+    es_representant TEXT,
+    inscrit_newsletter TEXT
+);
+
+CREATE TABLE subscriptors_persones (
+    persona_id INTEGER,
+    subscriptor_id INTEGER,
     FOREIGN KEY (persona_id) REFERENCES persones(id),
-    FOREIGN KEY (newsletter_id) REFERENCES newsletters(id)
+    FOREIGN KEY (subscriptor_id) REFERENCES subscriptors(id)
+);
+
+CREATE TABLE subscriptors_empreses (
+    empresa_id INTEGER,
+    subscriptor_id INTEGER,
+    FOREIGN KEY (empresa_id) REFERENCES empreses(id),
+    FOREIGN KEY (subscriptor_id) REFERENCES subscriptors(id)
+);
+
+CREATE TABLE subscriptors_newsletters (
+    newsletter_id INTEGER,
+    subscriptor_id INTEGER,
+    FOREIGN KEY (newsletter_id) REFERENCES newsletters(id),
+    FOREIGN KEY (subscriptor_id) REFERENCES subscriptors(id)
 );
 
 CREATE TABLE coopera (
@@ -187,6 +209,7 @@ INSERT INTO empreses_activitats (empresa_id, activitat_id) VALUES
 -- Insert into persones_activitats
 INSERT INTO persones_activitats (persona_id, activitat_id) VALUES
 (1, 1),
+(2, 1),
 (2, 2);
 
 -- Insert into productes
@@ -201,8 +224,20 @@ INSERT INTO transaccions (producte_id, empresa_receptora, data_lliurament, estat
 
 -- Insert into materials
 INSERT INTO materials (nom) VALUES
-('Ordinador'),
-('tela');
+('Coto'),
+('Llana'),
+('Seda'),
+('Poliester'),
+('Fusta'),
+('Plastic'),
+('Polietile'),
+('Vidre'),
+('Ceramica/Porcellana'),
+('Acer'),
+('Alumini'),
+('Aparells electronics'),
+('Televisors'),
+('Telefons');
 
 -- Insert into productes_materials
 INSERT INTO productes_materials (producte_id, material_id) VALUES
@@ -213,11 +248,6 @@ INSERT INTO productes_materials (producte_id, material_id) VALUES
 INSERT INTO newsletters (nom, data_publicacio, descripcio) VALUES
 ('Revista', '2025-01-01', 'Revista Impacte'),
 ('Periodic', '2025-02-01', 'Periodic');
-
--- Insert into subscripcions
-INSERT INTO subscripcions (persona_id, newsletter_id, data_alta) VALUES
-(1, 1, '2025-01-01'),
-(1, 2, '2025-01-01');
 
 -- Insert into coopera
 INSERT INTO coopera (titol, data_inici, impacte_energia, impacte_aigua, impacte_emissions, impacte_economic, detalls) VALUES

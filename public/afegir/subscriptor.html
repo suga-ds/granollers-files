@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ca">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Afegir Activitats - GRID Granollers</title>
+        <style>
+            :root {
+                --primary-color: #004f5a;
+                --secondary-color: #77b5a9;
+                --light-color: #ecf0f1;
+                --dark-color: #34495e;
+            }
+            
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+                color: var(--dark-color);
+                background-color: #f5f7fa;
+            }
+            
+            h1 {
+                color: var(--primary-color);
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            
+            .form-section {
+                background-color: white;
+                border-radius: 8px;
+                padding: 20px;
+                margin-bottom: 30px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            
+            .form-section h2 {
+                color: var(--secondary-color);
+                margin-top: 0;
+                border-bottom: 2px solid var(--light-color);
+                padding-bottom: 10px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="date"],
+            input[type="number"],
+            input[type="url"],
+            select,
+            textarea {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 16px;
+                box-sizing: border-box;
+            }
+            
+            textarea {
+                min-height: 100px;
+                resize: vertical;
+            }
+            
+            button {
+                background-color: var(--primary-color);
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+                display: block;
+                margin: 20px auto;
+                transition: background-color 0.3s;
+                width: 200px;
+            }
+            
+            button:hover {
+                background-color: #003d44;
+            }
+            
+            .required:after {
+                content: " *";
+                color: red;
+            }
+            
+            .two-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .three-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                gap: 15px;
+            }
+            
+            .participants-list {
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 10px;
+                max-height: 200px;
+                overflow-y: auto;
+            }
+            
+            .participant-item {
+                display: flex;
+                align-items: center;
+                margin-bottom: 8px;
+            }
+            
+            .participant-item input[type="checkbox"] {
+                margin-right: 10px;
+            }
+            
+            .back-button {
+                background-color: #003d44;
+                margin-bottom: 20px;
+            }
+            
+            .back-button:hover {
+                background-color: #5a6268;
+            }
+            
+            @media (max-width: 768px) {
+                .two-columns, .three-columns {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+<body>
+    <button class="back-button" onclick="location.href='/Paginaprincipal.html'">Tornar</button>
+    <h1>Gestió de subscripcions</h1>
+    
+    <form action="processa_suscriptor.php" method="post">
+        <!-- Secció Dades Bàsiques -->
+        <div class="form-section">
+            <h2>Dades del Suscriptor</h2>
+            
+            <div class="two-columns">
+                <div class="form-group">
+                    <label for="email" class="required">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="data_alta" class="required">Data d'alta:</label>
+                    <input type="date" id="data_alta" name="data_alta" required>
+                </div>
+            </div>
+            
+            <div class="two-columns">                
+                <div class="form-group">
+                    <label for="es_representant">Es representant?</label>
+                    <select id="es_representant" name="es_representant">
+                        <option value="Sí">Sí</option>
+                        <option value="No">No</option>
+                    </select>                  
+                </div>
+
+                <div class="form-group">
+                    <label for="inscrit_newsletter">Inscrit a newsletter?</label>
+                    <select id="inscrit_newsletter" name="inscrit_newsletter">
+                        <option value="Sí">Sí</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="form-section">
+            <h2>Empreses Participants</h2>
+            <div id="empreses-container">
+                <label>Empreses</label>
+                <div class="participant-input">
+                    <input type="text" name="empresa_activitat[][id_empresa]" placeholder="ID d'empresa" min="1">
+                </div>
+            </div>
+            <button type="button" class="btn" onclick="
+                const empresesContainer = document.getElementById('empreses-container');
+                const newInput = document.createElement('div');
+                newInput.className = 'participant-input';
+                newInput.innerHTML = `
+                    <input type='text' name='empresa_activitat[][id_empresa]' placeholder='ID empresa' min='1'>
+                    <button type='button' class='btn-remove' onclick='this.parentElement.remove()'>Eliminar</button>
+                `;
+                empreses-container.appendChild(newInput);
+            ">Afegir empresa</button>
+            <div class="error-message" id="empreses_error"></div>
+
+        </div>
+
+        <div class="form-section">
+            <h2>Persones Participants</h2>
+            <div id="persones-container">
+                <label>Persones</label>
+                <div class="participant-input">
+                    <input type="text" name="persona_activitat[][id_persona]" placeholder="ID de persona" min="1">
+                </div>
+            </div>
+            <button type="button" class="btn" onclick="
+                const personesContainer = document.getElementById('persones-container');
+                const newInput = document.createElement('div');
+                newInput.className = 'participant-input';
+                newInput.innerHTML = `
+                    <input type='text' name='persona_activitat[][id_persona]' placeholder='ID de persona' min='1'>
+                    <button type='button' class='btn-remove' onclick='this.parentElement.remove()'>Eliminar</button>
+                `;
+                persones-container.appendChild(newInput);
+            ">Afegir persona</button>
+            <div class="error-message" id="persones_error"></div>
+        </div>
+
+        <!-- Botó d'enviament -->
+        <button type="submit">Guardar suscriptor</button>
+    </form>
+
+    <script>
+    </script>
+</body>
+</html>

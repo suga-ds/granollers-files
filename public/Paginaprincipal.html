@@ -120,15 +120,15 @@
             </div>
             <!-- Nou Subscriptor -->
             <div class="card">
-                <h2>Subscripcions</h2>
-                <p>Gestiona les subscripcions.</p>
+                <h2>Subscriptors</h2>
+                <p>Gestiona les subscriptors.</p>
 
                 <div class="action-selector">
-                    <select id="subscripcio-action">
+                    <select id="subscriptor-action">
                         <option value="">-- Selecciona acció --</option>
-                        <option value="add">Afegir nova subscripció</option>
+                        <option value="add">Afegir nou subscriptor</option>
                     </select>
-                    <a href="#" class="btn" onclick="handleNavigation('subscripcio')">Accedir</a>
+                    <a href="#" class="btn" onclick="handleNavigation('subscriptor')">Accedir</a>
                 </div>
             </div>
 
@@ -196,8 +196,8 @@
                 return;
             }
 
-            if (section === 'subscripcio' && selectedAction === 'add') {
-                window.location.href = './afegir/subscripcio.html';
+            if (section === 'subscriptor' && selectedAction === 'add') {
+                window.location.href = './afegir/subscriptor.html';
                 return;
             }
 
